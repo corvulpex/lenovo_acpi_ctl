@@ -1,9 +1,18 @@
-#! /usr/bin/bash
+#! /bin/bash
 
 if [ $# == 0 ]; then 
-	echo "No command specified"
+	echo "No controller specified"
 	exit 1
 fi
+
+display_help() {
+	echo "---Lenovo ACPI Controller---"
+	echo "Usage:" 
+	echo "   $(basename $0) bcm [up | down]"
+	echo "	    Toggles the ideapad_acpi battery conservation mode"
+	echo "	    Optionally add up/down to set mode explicitly"
+	echo ""
+}
 
 battery_conservation_control () {
 	
@@ -47,10 +56,16 @@ battery_conservation_control () {
 	exit 1
 }
 
+if [[ $1 == "-h" || $1 == "--help" ]]; then 
+	display_help 
+	exit 0
+fi
+
 if [[ $1 == "bcm" ]]; then 
 	battery_conservation_control $@
 	exit 0
 fi
+
 
 echo "No commands except bcm supported yet"
 exit 1
